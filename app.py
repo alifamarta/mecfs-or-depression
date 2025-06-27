@@ -3,7 +3,6 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import LabelEncoder, StandardScaler
-from sklearn.metrics import classification_report, accuracy_score
 
 df = pd.read_csv('dataset/mecfs_vs_depression_dataset.csv')
 
@@ -32,6 +31,15 @@ x_test = scaler.fit_transform(x_test)
 # streamlit 
 st.title('Prediksi Diagnosis ME/CFS dan Depression Dengan Metode k-NN ')
 k = st.slider('Pilih value dari k untuk k-NN', 1, 15, 5)
+
+# medical explanation
+with st.expander('Penjelasan Istilah Medis'):
+    st.write(''' 
+    - **ME/CFS**: Myalgic Encephalomyelitis/Chronic Fatigue Syndrome (Kelelahan Kronis)
+    - **PEM**: Post-Exertional Malaise (Memburuknya gejala setelah aktivitas fisik/mental)
+    - **Brain Fog**: Kesulitan untuk berpikit, berkonsentrasi, atau mengingat 
+    - **PHQ-9**: Kuesioner standar untuk menilai tingkat depresi
+    ''')
 
 # train
 knn = KNeighborsClassifier(n_neighbors=k)
@@ -144,3 +152,8 @@ if st.button('Prediksi'):
 
     diagnosis = diagnosis_map.get(pred[0], pred[0])
     st.success(f'Hasil Prediksi Diagnosis: {diagnosis}')
+
+# evaluasi model
+with st.expander('Kinerja Model'):
+    accuracy = knn.score(x_test, y_test)
+    st.write(f'**Akurasi pada data yang telah diuji:** {accuracy:.2%}')
