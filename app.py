@@ -28,9 +28,13 @@ scaler = StandardScaler()
 x_train = scaler.fit_transform(x_train)
 x_test = scaler.fit_transform(x_test)
 
+# train
+knn = KNeighborsClassifier(n_neighbors=15)
+knn.fit(x_train, y_train)
+y_pred = knn.predict(x_test)
+
 # streamlit 
 st.title('Prediksi Diagnosis ME/CFS dan Depression Dengan Metode k-NN ')
-k = st.slider('Pilih value dari k untuk k-NN', 1, 15, 5)
 
 # medical explanation
 with st.expander('Penjelasan Istilah Medis'):
@@ -41,13 +45,10 @@ with st.expander('Penjelasan Istilah Medis'):
     - **PHQ-9**: Kuesioner standar untuk menilai tingkat depresi
     ''')
 
-# train
-knn = KNeighborsClassifier(n_neighbors=k)
-knn.fit(x_train, y_train)
-y_pred = knn.predict(x_test)
+st.markdown('<br>', unsafe_allow_html=True)
 
 # predict input from user
-st.subheader('Prediksi Diagnosa')
+st.subheader('Isi Form Ini Untuk Melakukan Prediksi Diagnosis')
 input_data = {}
 
 # Mapping ID to EN
