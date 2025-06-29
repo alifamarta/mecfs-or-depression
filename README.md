@@ -6,8 +6,6 @@ Aplikasi ini digunakan untuk membantu membedakan antara ME/CFS (Myalgic Encephal
 - Prediksi kemungkinan ME/CFS atau depresi
 - Tampilan hasil prediksi yang mudah dipahami
 
-<br>
-
 ## Screenshot 
 <img src="https://github.com/user-attachments/assets/f0b2db15-0e90-497c-8d7f-025ae671ae6b" alt="heade" width="600"/>
 <br>
