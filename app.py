@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import LabelEncoder
+from sklearn.metrics import confusion_matrix, classification_report
 from load_and_preprocess import load_and_preprocess
 
 df, x, y, x_train, x_test, y_train, y_test, scaler = load_and_preprocess()
@@ -152,6 +153,13 @@ if st.button('Prediksi'):
     st.success(f'Hasil Prediksi Diagnosis: {diagnosis}')
 
 # evaluasi model
-with st.expander('Kinerja Model'):
+with st.expander('Evaluasi Model'):
     accuracy = knn.score(x_test, y_test)
     st.write(f'**Akurasi pada data yang telah diuji:** {accuracy:.2%}')
+    cm = confusion_matrix(y_test, y_pred)
+    st.write('**Confusion Matrix:**')
+    st.write(pd.DataFrame(cm, index=knn.classes_, columns=knn.classes_))
+
+    st.write('**Classification Report:**')
+    report = classification_report(y_test, y_pred, output_dict=True)
+    st.write(pd.DataFrame(report).transpose())
