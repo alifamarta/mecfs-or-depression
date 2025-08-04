@@ -46,8 +46,10 @@ st.markdown('<hr>', unsafe_allow_html=True)
 st.subheader('Isi Form Ini Untuk Melakukan Prediksi Diagnosis')
 input_data = {}
 
-# Mapping ID to EN
+# Mapping
 gender_map = {'Laki-Laki': 'Male', 'Perempuan': 'Female'}
+
+pem_present_map = {'Ya': '1', 'Tidak': '1'}
 
 work_status_map = {
     'Bekerja': 'Working',
@@ -109,7 +111,7 @@ for col in df.columns:
         input_data[col] = st.slider('Jam Tidur Per Malam', 0.0, 12.0, 7.0)
 
     elif col == 'pem_present':
-        input_data[col] = st.selectbox('PEM Present', [0, 1])
+        input_data[col] = st.selectbox('PEM Present', list(pem_present_map.keys()))
 
     elif col == 'work_status':
         work_status = st.selectbox('Status Kerja', list(work_status_map.keys()))
