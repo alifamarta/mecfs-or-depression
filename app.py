@@ -1,30 +1,46 @@
 import streamlit as st
 import pandas as pd
-from sklearn.model_selection import train_test_split
+import numpy as np
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.preprocessing import LabelEncoder
 from load_and_preprocess import load_and_preprocess
 
 df, x, y, x_train, x_test, y_train, y_test, scaler = load_and_preprocess()
 
 # train
-knn = KNeighborsClassifier(n_neighbors=15)
+knn = KNeighborsClassifier(n_neighbors=10, metric='manhattan')
 knn.fit(x_train, y_train)
 y_pred = knn.predict(x_test)
 
 # streamlit 
 st.title('Prediksi Diagnosis ME/CFS dan Depression Dengan Metode k-NN ')
 
-# medical explanation
-with st.expander('Penjelasan Istilah Medis'):
-    st.write(''' 
-    - **ME/CFS**: Myalgic Encephalomyelitis/Chronic Fatigue Syndrome (Kelelahan Kronis)
-    - **PEM**: Post-Exertional Malaise (Memburuknya gejala setelah aktivitas fisik/mental)
-    - **Brain Fog**: Kesulitan untuk berpikit, berkonsentrasi, atau mengingat 
-    - **PHQ-9**: Kuesioner standar untuk menilai tingkat depresi
-    ''')
+st.markdown('<hr>', unsafe_allow_html=True)
 
-st.markdown('<br>', unsafe_allow_html=True)
+# about
+st.markdown('''
+## Tentang Aplikasi
+Aplikasi ini adalah sebuah aplikasi web yang dirancang untuk membedakan antara membedakan antara ME/CFS (Myalgic Encephalomyelitis/Chronic Fatigue Syndrome) dan depresi berdasarkan data gejala yang dimasukkan pengguna.
+
+Dengan bantuan dari sebuah dataset dari kaggle, aplikasi ini akan memprediksi diagnosis ME/CFS atau depresi berdasarkan data gejala yang dimasukkan oleh pengguna.
+
+Sumber dataset: [ME/CFS vs Depression Classification Dataset](https://www.kaggle.com/datasets/storytellerman/mecfs-vs-depression-classification-dataset)
+ ''')
+
+# medical explanation
+
+st.markdown('<hr>', unsafe_allow_html=True)
+
+st.markdown(''' 
+## Penjelasan Medis
+            
+- **ME/CFS**: Myalgic Encephalomyelitis/Chronic Fatigue Syndrome (Kelelahan Kronis)
+- **PEM**: Post-Exertional Malaise (Memburuknya gejala setelah aktivitas fisik/mental)
+- **Brain Fog**: Kesulitan untuk berpikit, berkonsentrasi, atau mengingat 
+- **PHQ-9**: Kuesioner standar untuk menilai tingkat depresi
+''')
+
+st.markdown('<hr>', unsafe_allow_html=True)
 
 # predict input from user
 st.subheader('Isi Form Ini Untuk Melakukan Prediksi Diagnosis')
